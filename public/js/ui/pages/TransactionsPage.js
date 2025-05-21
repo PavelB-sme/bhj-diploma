@@ -22,7 +22,7 @@ class TransactionsPage {
    * Вызывает метод render для отрисовки страницы
    * */
   update() {
-    this.render();
+    this.render(this.lastOptions);
   }
 
   /**
@@ -61,13 +61,14 @@ class TransactionsPage {
     }
     const isConfirm = confirm('Удалить счет?')
     if (isConfirm) {
-      Account.remove(this.lastOptions.account_id, (err, response) => {
+      Account.remove('',{ id: this.lastOptions.account_id }, (err, response) => {
         if(response && response.success) {
           App.updateWidgets();
           App.updateForms();
         }
       })
-    } else return;
+      this.clear();
+    }
   }
 
   /**
@@ -79,9 +80,13 @@ class TransactionsPage {
   removeTransaction( id ) {
     const isConfirm = confirm('Удалить транзакцию')
     if (isConfirm) {
-      Transaction.remove(id, (err, response) => {
+      Transaction.remove('', { id: id }, (err, response) => {
         if (response && response.success) {
-          App.update()
+          this.update();
+          App.updateWidgets();
+          App.updateForms();
+        }else {
+          console.log('Удаление не удалось', response);
         }
       })
     }
@@ -99,17 +104,19 @@ class TransactionsPage {
     }
 
     this.lastOptions = options;
+
     Account.get(options.account_id, (err, response) => {
       if(response) {
-        this.renderTitle(response.data.name);
+        const account = response.data.find(acc => acc.id === options.account_id);
+        this.renderTitle(`Название счета: ${account.name}`);
       }
     })
+
     Transaction.list(options, (err, response) => {
       if (response.data) {
         this.renderTransactions(response.data)
       }
     })
-
   }
 
   /**
@@ -158,30 +165,30 @@ class TransactionsPage {
   getTransactionHTML(item){
     const date = this.formatDate(item.created_at);
     return `
-    <div class="transaction transaction_${item.type} row">
-    <div class="col-md-7 transaction__details">
-      <div class="transaction__icon">
-          <span class="fa fa-money fa-2x"></span>
+      <div class="transaction transaction_${item.type} row">
+        <div class="col-md-7 transaction__details">
+          <div class="transaction__icon">
+              <span class="fa fa-money fa-2x"></span>
+          </div>
+          <div class="transaction__info">
+              <h4 class="transaction__title">${item.name}</h4>
+              <!-- дата -->
+              <div class="transaction__date">${date}</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="transaction__summ">
+          <!--  сумма -->
+              ${item.sum} <span class="currency">₽</span>
+          </div>
+        </div>
+        <div class="col-md-2 transaction__controls">
+            <!-- в data-id нужно поместить id -->
+            <button class="btn btn-danger transaction__remove" data-id=${item.id}>
+                <i class="fa fa-trash"></i>  
+            </button>
+        </div>
       </div>
-      <div class="transaction__info">
-          <h4 class="transaction__title">${item.name}</h4>
-          <!-- дата -->
-          <div class="transaction__date">${date}</div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="transaction__summ">
-      <!--  сумма -->
-          ${item.sum} <span class="currency">₽</span>
-      </div>
-    </div>
-    <div class="col-md-2 transaction__controls">
-        <!-- в data-id нужно поместить id -->
-        <button class="btn btn-danger transaction__remove" data-id=${item.id}>
-            <i class="fa fa-trash"></i>  
-        </button>
-    </div>
-</div>
     `
   }
 
