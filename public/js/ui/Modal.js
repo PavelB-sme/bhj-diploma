@@ -28,13 +28,14 @@ class Modal {
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
+    const closeElements = this.element.querySelectorAll('[data-dismiss="modal"]');
 
-     this.element.addEventListener('click', (e) => {
-       e.preventDefault();
-       if (e.target.closest('[data-dismiss="modal"]')) {
-         this.onClose(this.element)
-       }
-     })
+    closeElements.forEach(element => {
+      element.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.onClose(e);
+      });
+    });
   }
 
   /**

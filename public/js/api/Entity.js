@@ -6,7 +6,12 @@ class Entity {
    * */
   static URL = ''
   static list(data, callback){
-    return createRequest({method: 'GET', data, callback, url: Entity.URL});
+    return createRequest({
+      url: this.URL,
+      method: 'GET',
+      data: data,
+      callback,
+      });
   }
 
   /**
@@ -14,15 +19,28 @@ class Entity {
    * на сервер. (в зависимости от того,
    * что наследуется от Entity)
    * */
-  static create(data, callback) {
-    return createRequest({method: 'PUT', data, callback, url: Entity.URL});
+  static create(data, callback = f => f) {
+    return createRequest({
+      url: this.URL,
+      method: 'PUT',
+      responseType: 'json',
+      data: data,
+      callback
+      });
   }
 
   /**
    * Удаляет информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static remove(data, callback ) {
-    return createRequest({method: 'DELETE', data, callback, url: Entity.URL});
+  static remove(id = '', data, callback = f => f ) {
+    return createRequest({
+      url: this.URL,
+      method: 'DELETE',
+      responseType: 'json',
+      id: id,
+      data: data,
+      callback,
+      });
   }
 }

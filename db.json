@@ -10,6 +10,12 @@
       "email": "test@test.com",
       "password": "123",
       "id": "4p7md5fccmanu8jtk"
+    },
+    {
+      "name": "demo1",
+      "email": "demo1@demo",
+      "password": "123",
+      "id": "4p7md5ghomaparqt6"
     }
   ],
   "accounts": [
@@ -27,6 +33,16 @@
       "name": "Бизнес",
       "user_id": "1",
       "id": "3"
+    },
+    {
+      "name": "vv",
+      "user_id": "1",
+      "id": "4p7md5boomawi3py9"
+    },
+    {
+      "name": "T",
+      "user_id": "1",
+      "id": "4p7md5dd4mawiaaez"
     }
   ],
   "transactions": [
@@ -164,6 +180,87 @@
       "sum": 300000,
       "type": "expense",
       "user_id": "1"
+    },
+    {
+      "id": "4p7md5d5wmawk9sck",
+      "type": "income",
+      "name": "Зп",
+      "sum": 10,
+      "account_id": "1",
+      "user_id": "1",
+      "created_at": "2025-05-20T13:40:00.067Z"
+    },
+    {
+      "id": "4p7md51ogmawkakx3",
+      "type": "income",
+      "name": "3",
+      "sum": 3,
+      "account_id": "1",
+      "user_id": "1",
+      "created_at": "2025-05-20T13:40:37.094Z"
+    },
+    {
+      "id": "4p7md53bgmawkb22a",
+      "type": "income",
+      "name": "df",
+      "sum": 3,
+      "account_id": "1",
+      "user_id": "1",
+      "created_at": "2025-05-20T13:40:59.313Z"
+    },
+    {
+      "id": "4p7md5ssmawkbxhm",
+      "type": "expense",
+      "name": "gf",
+      "sum": 34,
+      "account_id": "1",
+      "user_id": "1",
+      "created_at": "2025-05-20T13:41:40.041Z"
+    },
+    {
+      "id": "4p7md5cv4mawkcrqx",
+      "type": "income",
+      "name": "rf",
+      "sum": 2,
+      "account_id": "1",
+      "user_id": "1",
+      "created_at": "2025-05-20T13:42:19.256Z"
+    },
+    {
+      "id": "4p7md5ajkmawkd4i2",
+      "type": "income",
+      "name": "v",
+      "sum": 2,
+      "account_id": "1",
+      "user_id": "1",
+      "created_at": "2025-05-20T13:42:35.785Z"
+    },
+    {
+      "id": "4p7md52csmawkhcjg",
+      "type": "income",
+      "name": "T2",
+      "sum": 2,
+      "account_id": "1",
+      "user_id": "1",
+      "created_at": "2025-05-20T13:45:52.827Z"
+    },
+    {
+      "id": "4p7md56sgmawklecv",
+      "type": "income",
+      "name": "T",
+      "sum": 3,
+      "account_id": "1",
+      "user_id": "1",
+      "created_at": "2025-05-20T13:49:01.806Z"
+    },
+    {
+      "id": "4p7md5dhcmawklo88",
+      "type": "income",
+      "name": "T",
+      "sum": 23,
+      "account_id": "1",
+      "user_id": "1",
+      "created_at": "2025-05-20T13:49:14.599Z"
     }
   ]
 }

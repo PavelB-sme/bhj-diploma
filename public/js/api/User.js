@@ -27,7 +27,7 @@ class User {
    * из локального хранилища
    * */
   static current () {
-    if (localStorage.getItem('user')) {
+    if (localStorage.user) {
       return JSON.parse(localStorage.getItem('user'));
     } else {
       return undefined;
@@ -42,14 +42,14 @@ class User {
   static fetch (callback) {
     createRequest({
       method: 'GET',
-      url: URL + '/current',
+      url: this.URL + '/current',
       callback: (err, response) => {
         if (response && response.user) {
           this.setCurrent(response.user);
         } else {
           this.unsetCurrent();
-          callback(err, response);
         }
+        callback(err, response);
       }
     });
   }

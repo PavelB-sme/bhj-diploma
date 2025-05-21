@@ -32,24 +32,24 @@ class Sidebar {
    * */
   static initAuthLinks() {
 
-    document.addEventListener('click', (e) => {
+    document.querySelector('.menu-item_register').addEventListener('click', (e) => {
       e.preventDefault();
-      if (e.target.closest('.menu-item_register')) {
-        App.getModal('register').open();
-      }
-      if (e.target.closest('.menu-item_login')) {
-        App.getModal('login').open();
-      }
-      if (e.target.closest('.menu-item_logout')) {
-        User.logout((err, response) => {
-          if (response && response.success) {
-            App.setState('init');
-          } else {
-            console.error('Ошибка выхода:', err);
-          }
-        });
-      }
-    })
+      App.getModal('register').open();
+    });
+
+    document.querySelector('.menu-item_login').addEventListener('click', (e) => {
+      e.preventDefault();
+      App.getModal('login').open();
+    });
+
+    document.querySelector('.menu-item_logout').addEventListener('click', (e) => {
+      e.preventDefault();
+      User.logout((err, response) => {
+        if (response && response.success) {
+          App.setState('init');
+        }
+      });
+    });
 
   }
 }
