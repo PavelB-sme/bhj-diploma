@@ -61,13 +61,21 @@ class TransactionsPage {
     }
     const isConfirm = confirm('Удалить счет?')
     if (isConfirm) {
-      Account.remove('',{ id: this.lastOptions.account_id }, (err, response) => {
-        if(response && response.success) {
-          App.updateWidgets();
-          App.updateForms();
+      Account.remove(this.lastOptions.account_id, (err, response) => {
+        if (err || !response?.success) {
+          console.error('Ошибка удаления:', err || response);
+          return;
         }
+
+        // 1. Сначала очищаем страницу
+        this.clear();
+        this.update();
+        // 2. Обновляем виджеты и формы
+        App.updateWidgets();
+        App.updateForms();
+
       })
-      this.clear();
+
     }
   }
 
@@ -80,7 +88,7 @@ class TransactionsPage {
   removeTransaction( id ) {
     const isConfirm = confirm('Удалить транзакцию')
     if (isConfirm) {
-      Transaction.remove('', { id: id }, (err, response) => {
+      Transaction.remove( id, (err, response) => {
         if (response && response.success) {
           this.update();
           App.updateWidgets();
@@ -105,18 +113,32 @@ class TransactionsPage {
 
     this.lastOptions = options;
 
-    Account.get(options.account_id, (err, response) => {
-      if(response) {
-        const account = response.data.find(acc => acc.id === options.account_id);
-        this.renderTitle(`Название счета: ${account.name}`);
+    Account.get(options.account_id, (err, account) => {
+      if (err) {
+        console.error('Failed to load account:', err);
+        return;
       }
-    })
 
-    Transaction.list(options, (err, response) => {
-      if (response.data) {
-        this.renderTransactions(response.data)
+      if (!account) {
+        console.error('Account not found');
+        return;
       }
-    })
+
+      this.renderTitle(`Название счета: ${account.name}`);
+    });
+
+    Transaction.list(options, (err, transactions) => {
+      if (err) {
+        console.error('Failed to load transactions:', err);
+        return;
+      }
+
+      if (transactions) {
+        this.renderTransactions(transactions);
+      } else {
+        this.renderTransactions([]);
+      }
+    });
   }
 
   /**
@@ -198,11 +220,14 @@ class TransactionsPage {
    * */
   renderTransactions(data){
     const element = document.querySelector('.content')
+    if (data.length === 0) {
+      return;
+    }
     if(data) {
-      element.innerHTML = '';
-      for (let i = 0; i < data.length; i++) {
-        element.innerHTML += this.getTransactionHTML(data[i]);
-      }
+      console.log(data)
+      element.innerHTML = data.data.reduce((html, transaction) => {
+        return html + this.getTransactionHTML(transaction);
+      }, '');
     }
   }
 }

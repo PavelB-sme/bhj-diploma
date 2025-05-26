@@ -20,15 +20,11 @@ class CreateTransactionForm extends AsyncForm {
   renderAccountsList() {
     Account.list(User.current(), (err, response) => {
     const lists = this.element.querySelector('.accounts-select');
-      lists.innerHTML = '';
       if (response && response.success) {
-      response.data.forEach((account) => {
-        const option = document.createElement('option');
-        option.value = account.id;
-        option.textContent = account.name;
-        lists.appendChild(option);
-      })
-    }
+        lists.innerHTML = response.data.reduce((html, account) => {
+          return html + `<option value="${account.id}">${account.name}</option>`;
+        }, '')
+      }
     })
   }
   /**

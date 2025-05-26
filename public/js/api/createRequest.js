@@ -18,11 +18,9 @@ const createRequest = (options = {}) => {
     }
   }
 
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4 && xhr.status === 200) {
+  xhr.addEventListener('load',  () => {
       options.callback(null, xhr.response);
-    }
-  };
+  });
 
   xhr.open(options.method, options.url, true);
   try {
