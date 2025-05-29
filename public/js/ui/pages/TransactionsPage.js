@@ -66,16 +66,9 @@ class TransactionsPage {
           console.error('Ошибка удаления:', err || response);
           return;
         }
-
-        // 1. Сначала очищаем страницу
         this.clear();
-        this.update();
-        // 2. Обновляем виджеты и формы
-        App.updateWidgets();
-        App.updateForms();
-
+        App.update();
       })
-
     }
   }
 
