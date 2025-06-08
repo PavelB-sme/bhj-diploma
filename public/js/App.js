@@ -172,6 +172,7 @@ class App {
    * */
   static clear() {
     this.getPage("transactions").clear();
+
   }
 
   /**

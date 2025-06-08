@@ -214,10 +214,10 @@ class TransactionsPage {
   renderTransactions(data){
     const element = document.querySelector('.content')
     if (data.length === 0) {
+      element.innerHTML = '';
       return;
     }
     if(data) {
-      console.log(data)
       element.innerHTML = data.data.reduce((html, transaction) => {
         return html + this.getTransactionHTML(transaction);
       }, '');
